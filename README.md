@@ -1,12 +1,12 @@
 # Pict Section UserManagement
 
-> **[&#9654; Read the Pict-Section-UserManagement Documentation](https://fable-retold.github.io/pict-section-usermanagement/)** &mdash; interactive docs with the full API and usage reference.
+> **[Read the Pict-Section-UserManagement Documentation](https://fable-retold.github.io/pict-section-usermanagement/)** - interactive docs with the full API and usage reference.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
 
-User-management UI for Pict applications: a REST provider plus five views — login, a current-user badge, an admin user list, a create/edit user form, and a self-service password change. It is backed by [orator-authentication](https://github.com/fable-retold/orator-authentication)'s session routes (`Authenticate` / `Deauthenticate` / `CheckSession`) and the [ultravisor-auth-beacon](https://github.com/stevenvelozo/ultravisor-auth-beacon) `/Users` CRUD surface.
+User-management UI for Pict applications: a REST provider plus five views - login, a current-user badge, an admin user list, a create/edit user form, and a self-service password change. It is backed by [orator-authentication](https://github.com/fable-retold/orator-authentication)'s session routes (`Authenticate` / `Deauthenticate` / `CheckSession`) and the [ultravisor-auth-beacon](https://github.com/stevenvelozo/ultravisor-auth-beacon) `/Users` CRUD surface.
 
 The provider owns every network call and writes results into `pict.AppData.UserManagement`. The views are thin: they render from `AppData`, collect input, and call provider methods. No view fetches on its own.
 
@@ -53,7 +53,7 @@ libPictSectionUserManagement.install(_Pict,
 		}
 	});
 
-// The provider does not auto-fetch — check the session on boot.
+// The provider does not auto-fetch - check the session on boot.
 const tmpProvider = _Pict.providers['Pict-UserManagement-Provider'];
 tmpProvider.checkSession(() =>
 {

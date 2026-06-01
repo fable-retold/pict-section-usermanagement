@@ -2,7 +2,7 @@
 
 > User-management UI for Pict applications
 
-A provider plus five views that cover the common user-account surface of an authenticated app — login, a current-user badge, an admin user list/edit, and self-service password change. Backed by orator-authentication sessions and the auth-beacon `/Users` CRUD endpoints.
+A provider plus five views that cover the common user-account surface of an authenticated app - login, a current-user badge, an admin user list/edit, and self-service password change. Backed by orator-authentication sessions and the auth-beacon `/Users` CRUD endpoints.
 
 - **Provider + Views** -- One REST provider does the I/O; five views render from `AppData`
 - **Session Routes** -- `login` / `logout` / `checkSession` map to Authenticate / Deauthenticate / CheckSession

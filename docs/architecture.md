@@ -117,28 +117,28 @@ Every path is appended to `options.BaseURL` (default `/1.0/`). The provider send
 | Provider method | HTTP | Path | Source |
 |---|---|---|---|
 | `checkSession()` | `GET` | `CheckSession` | orator-authentication |
-| `login(u, p)` | `POST` | `Authenticate` — body `{ UserName, Password }` | orator-authentication |
+| `login(u, p)` | `POST` | `Authenticate` - body `{ UserName, Password }` | orator-authentication |
 | `logout()` | `POST` | `Deauthenticate` | orator-authentication |
 | `loadUsers(search)` | `GET` | `Users` (optional `?search=`) | auth-beacon |
 | `createUser(spec)` | `POST` | `Users` | auth-beacon |
 | `getUser(id)` | `GET` | `User/:id` | auth-beacon |
 | `updateUser(id, updates)` | `PUT` | `User/:id` | auth-beacon |
 | `deleteUser(id)` | `DELETE` | `User/:id` | auth-beacon |
-| `setUserPassword(id, pw)` | `POST` | `User/:id/SetPassword` — body `{ NewPassword }` | auth-beacon |
-| `changePassword(cur, new)` | `POST` | `Me/ChangePassword` — body `{ CurrentPassword, NewPassword }` | auth-beacon |
+| `setUserPassword(id, pw)` | `POST` | `User/:id/SetPassword` - body `{ NewPassword }` | auth-beacon |
+| `changePassword(cur, new)` | `POST` | `Me/ChangePassword` - body `{ CurrentPassword, NewPassword }` | auth-beacon |
 
 ### Response shapes the provider expects
 
-- **`CheckSession` / `Authenticate`** — `{ LoggedIn: true, UserID, UserRecord: { LoginID, IDUser, Roles, FullName, Email } }`. Anything without `LoggedIn: true` is treated as not-logged-in. On `Authenticate`, a falsy `LoggedIn` with an `Error` string surfaces as a login failure.
-- **`Users` (GET)** — `{ Users: [ ... ] }`. The array is stored at `AllUsers`; a missing array becomes `[]`.
-- **`User/:id` (GET)** — `{ User: {...} }`. Stored at `SelectedUser`.
-- **Mutations** — the body is passed back through the callback. UserEdit additionally treats `{ Success: false, Reason }` as a failure even on a 2xx response.
+- **`CheckSession` / `Authenticate`** - `{ LoggedIn: true, UserID, UserRecord: { LoginID, IDUser, Roles, FullName, Email } }`. Anything without `LoggedIn: true` is treated as not-logged-in. On `Authenticate`, a falsy `LoggedIn` with an `Error` string surfaces as a login failure.
+- **`Users` (GET)** - `{ Users: [ ... ] }`. The array is stored at `AllUsers`; a missing array becomes `[]`.
+- **`User/:id` (GET)** - `{ User: {...} }`. Stored at `SelectedUser`.
+- **Mutations** - the body is passed back through the callback. UserEdit additionally treats `{ Success: false, Reason }` as a failure even on a 2xx response.
 
 ### Error handling
 
 `_call` builds an `Error` whenever the response is not ok (`status >= 400` or `ok === false`), attaching `status` and the parsed `body`. The error's message prefers `body.Reason` or `body.Error`, falling back to `HTTP <status>`. Every public method also records the failure to `AppData.UserManagement.LastError` as `{ Action, Message, Status, Reason }`.
 
-`logout()` always clears the local session (`CurrentUser = { LoggedIn: false }`) even if the network call fails — the user asked to sign out, so they should never be stuck with a stale badge.
+`logout()` always clears the local session (`CurrentUser = { LoggedIn: false }`) even if the network call fails - the user asked to sign out, so they should never be stuck with a stale badge.
 
 ## Login Request Flow
 
@@ -174,7 +174,7 @@ The provider resolves its transport once, in the constructor:
 
 1. `options.Fetcher` if it is a function.
 2. Otherwise `globalThis.fetch` (bound), when available.
-3. Otherwise `null` — calls reject with a clear "no Fetcher available" error.
+3. Otherwise `null` - calls reject with a clear "no Fetcher available" error.
 
 A `Fetcher` is any callable `(path, opts) => Promise<{ ok, status, json() }>`. This is the seam the bundled demo uses to run against an in-browser mock with no backend, and it is how tests inject a stub. In production the default `fetch` path is correct; you only set `Fetcher` to mock or to wrap the transport.
 

@@ -94,7 +94,7 @@ const libPictSectionModal = require('pict-section-modal');
 _Pict.addView('Pict-Section-Modal', {}, libPictSectionModal);
 ```
 
-If the modal is not present, Delete proceeds without a confirmation prompt and toasts are silently skipped — so installing it is strongly recommended.
+If the modal is not present, Delete proceeds without a confirmation prompt and toasts are silently skipped - so installing it is strongly recommended.
 
 ## 6. Check the Session on Boot
 
@@ -118,7 +118,7 @@ tmpProvider.checkSession((pError, pCurrentUser) =>
 
 ## 7. Render the Login Form
 
-The Login view renders a username + password form. On submit it calls `provider.login(...)`; on success `AppData.UserManagement.CurrentUser` flips to `LoggedIn: true`. The view does not navigate — use the `OnLogin` hook (or subscribe to the store) to swap in the rest of your UI:
+The Login view renders a username + password form. On submit it calls `provider.login(...)`; on success `AppData.UserManagement.CurrentUser` flips to `LoggedIn: true`. The view does not navigate - use the `OnLogin` hook (or subscribe to the store) to swap in the rest of your UI:
 
 ```javascript
 _Pict.addView('PictUM-Login',
@@ -137,7 +137,7 @@ _Pict.views['PictUM-Login'].render();
 
 ## 8. Render the Admin User List
 
-The UserList view renders from `AppData.UserManagement.AllUsers`. The view does not load on its own — call `loadUsers()` when the list mounts (the view's Refresh button and search box call it for you afterward):
+The UserList view renders from `AppData.UserManagement.AllUsers`. The view does not load on its own - call `loadUsers()` when the list mounts (the view's Refresh button and search box call it for you afterward):
 
 ```javascript
 tmpProvider.loadUsers((pError, pUsers) =>
@@ -150,7 +150,7 @@ By default a row's **Edit** button writes the user to `AppData.UserManagement.Se
 
 ## 9. Render the Password-Change Form
 
-The PasswordChange view is self-service for the current session — the backend resolves the target user from the session cookie, so the view never needs a `UserID`:
+The PasswordChange view is self-service for the current session - the backend resolves the target user from the session cookie, so the view never needs a `UserID`:
 
 ```javascript
 _Pict.views['PictUM-PasswordChange'].render();
@@ -176,5 +176,5 @@ The provider also exposes `currentUser()`, `isLoggedIn()`, and `isAdmin()` as co
 
 ## Next Steps
 
-- [Architecture](architecture.md) — the provider/view split, the `AppData` contract, and the full REST surface.
-- [API & Usage](api-and-usage.md) — every provider method, view option, and host hook.
+- [Architecture](architecture.md) - the provider/view split, the `AppData` contract, and the full REST surface.
+- [API & Usage](api-and-usage.md) - every provider method, view option, and host hook.

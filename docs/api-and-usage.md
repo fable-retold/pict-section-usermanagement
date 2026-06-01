@@ -90,7 +90,7 @@ provider.login('admin', 'admin', (pError, pBody) =>
 
 ### `loadUsers(pSearch, fCallback)`
 
-`GET Users`, optionally `?search=<term>`. Stores the returned `Users` array at `AllUsers`. `pSearch` may be omitted — `loadUsers(fCallback)` is accepted for the no-search case.
+`GET Users`, optionally `?search=<term>`. Stores the returned `Users` array at `AllUsers`. `pSearch` may be omitted - `loadUsers(fCallback)` is accepted for the no-search case.
 
 ```javascript
 provider.loadUsers('ali', (pError, pUsers) => { /* pUsers is the filtered list */ });
@@ -115,11 +115,11 @@ provider.loadUsers((pError, pUsers) => { /* all users */ });
 
 ### `setUserPassword(pUserID, pNewPassword, fCallback)`
 
-`POST User/:id/SetPassword` with `{ NewPassword }`. Admin action — sets another user's password without their current one. Used by the UserList "Reset password" action.
+`POST User/:id/SetPassword` with `{ NewPassword }`. Admin action - sets another user's password without their current one. Used by the UserList "Reset password" action.
 
 ### `changePassword(pCurrentPassword, pNewPassword, fCallback)`
 
-`POST Me/ChangePassword` with `{ CurrentPassword, NewPassword }`. Self-service — the backend resolves the target from the session cookie.
+`POST Me/ChangePassword` with `{ CurrentPassword, NewPassword }`. Self-service - the backend resolves the target from the session cookie.
 
 ## Provider Read Accessors
 
@@ -135,17 +135,17 @@ Synchronous convenience reads over `AppData.UserManagement`:
 
 All five views extend `pict-view`, share these conventions, and resolve the provider through `options.ProviderHash`:
 
-- `AutoInitialize: true`, `AutoRender: false` — the host (or a layout view) calls `render()`.
+- `AutoInitialize: true`, `AutoRender: false` - the host (or a layout view) calls `render()`.
 - Each has a `DefaultDestinationAddress` and renders into a fixed DOM id (below).
 - `CSSPriority: 500`.
 
 | View | Hash | Mount id | Reads | Calls |
 |---|---|---|---|---|
-| Login | `PictUM-Login` | `#PictUM-Login` | — | `login` |
+| Login | `PictUM-Login` | `#PictUM-Login` | - | `login` |
 | CurrentUser | `PictUM-CurrentUser` | `#PictUM-CurrentUser` | `CurrentUser` | `logout`, `currentUser` |
 | UserList | `PictUM-UserList` | `#PictUM-UserList` | `AllUsers` | `loadUsers`, `deleteUser`, `setUserPassword` |
 | UserEdit | `PictUM-UserEdit` | `#PictUM-UserEdit` | `CreateMode`, `SelectedUser` | `createUser`, `updateUser`, `loadUsers` |
-| PasswordChange | `PictUM-PasswordChange` | `#PictUM-PasswordChange` | — | `changePassword` |
+| PasswordChange | `PictUM-PasswordChange` | `#PictUM-PasswordChange` | - | `changePassword` |
 
 ### Login view
 
@@ -157,7 +157,7 @@ Renders a username + password form. Validates both fields are non-empty client-s
 
 ### CurrentUser view
 
-A compact session badge: an initials avatar, the display name (`UserRecord.FullName` → `LoginID` → `Username` → `UserID`), a roles label, and a "Sign out" button. Renders **nothing** when not logged in, so it can sit in a top bar unconditionally. Clicking "Sign out" calls `provider.logout()`, re-renders (dropping the badge), then calls the `OnLogout` hook.
+A compact session badge: an initials avatar, the display name (`UserRecord.FullName` -> `LoginID` -> `Username` -> `UserID`), a roles label, and a "Sign out" button. Renders **nothing** when not logged in, so it can sit in a top bar unconditionally. Clicking "Sign out" calls `provider.logout()`, re-renders (dropping the badge), then calls the `OnLogout` hook.
 
 | Option | Type | Description |
 |---|---|---|
@@ -169,9 +169,9 @@ An admin table (Username / Roles / Email / actions) plus a toolbar with a deboun
 
 Per-row actions:
 
-- **Edit** — calls `OnEditUser(user)` if provided; otherwise writes a copy of the user to `AppData.UserManagement.SelectedUser`.
-- **Reset password** — opens a `pict-section-modal` prompt with a password input, then calls `setUserPassword(userID, newPassword)`; reports via toast.
-- **Delete** — confirms via `pict-section-modal` (`dangerous: true`), then calls `deleteUser(userID)`, refreshes the list, and toasts. With no modal installed it proceeds without confirmation.
+- **Edit** - calls `OnEditUser(user)` if provided; otherwise writes a copy of the user to `AppData.UserManagement.SelectedUser`.
+- **Reset password** - opens a `pict-section-modal` prompt with a password input, then calls `setUserPassword(userID, newPassword)`; reports via toast.
+- **Delete** - confirms via `pict-section-modal` (`dangerous: true`), then calls `deleteUser(userID)`, refreshes the list, and toasts. With no modal installed it proceeds without confirmation.
 
 The toolbar's **New user** calls `OnNewUser()` if provided; otherwise sets `SelectedUser = null` and `CreateMode = true` so the UserEdit view opens its create form.
 
@@ -180,15 +180,15 @@ The toolbar's **New user** calls `OnNewUser()` if provided; otherwise sets `Sele
 | `OnEditUser(pUser)` | `function` | Override the default "write to `SelectedUser`" behavior for the Edit action. |
 | `OnNewUser()` | `function` | Override the default "set `CreateMode`" behavior for the New-user button. |
 
-> The view does not call `loadUsers()` itself — the host loads the list when the view mounts. Refresh and search call `loadUsers()` after that.
+> The view does not call `loadUsers()` itself - the host loads the list when the view mounts. Refresh and search call `loadUsers()` after that.
 
 ### UserEdit view
 
 A create-or-update form with three modes resolved at render time from `AppData.UserManagement`:
 
-1. `CreateMode === true` → empty form; submit calls `createUser(spec)`.
-2. `SelectedUser` set → prefilled form; submit calls `updateUser(id, updates)` with only the changed fields.
-3. Neither → renders nothing.
+1. `CreateMode === true` -> empty form; submit calls `createUser(spec)`.
+2. `SelectedUser` set -> prefilled form; submit calls `updateUser(id, updates)` with only the changed fields.
+3. Neither -> renders nothing.
 
 Fields: Username, Full name, Email, Roles (comma-separated), and (create mode only) Password. Create requires Username + Password. Update sends a minimal diff and reports "No changes to save." when nothing changed. On success it clears `CreateMode` / `SelectedUser`, calls `provider.loadUsers()` to refresh the list, toasts, and re-renders to the empty state. A Cancel button clears the edit state and re-renders.
 
@@ -196,7 +196,7 @@ This view takes no host-hook options.
 
 ### PasswordChange view
 
-Self-service form: current password, new password, confirm new password. Validates that all three are filled, that new matches confirm, and that new differs from current, then calls `changePassword(current, new)`. On success it shows a confirmation ("Password updated. Other sessions have been signed out.") and clears the fields. Renders nothing meaningful if there is no session — guard at the host level for a hard "must be logged in" gate.
+Self-service form: current password, new password, confirm new password. Validates that all three are filled, that new matches confirm, and that new differs from current, then calls `changePassword(current, new)`. On success it shows a confirmation ("Password updated. Other sessions have been signed out.") and clears the fields. Renders nothing meaningful if there is no session - guard at the host level for a hard "must be logged in" gate.
 
 This view takes no host-hook options.
 
@@ -214,14 +214,14 @@ The provider expects an `orator-authentication`-style session API plus an auth-b
 
 | Path | Method | Request | Success body |
 |---|---|---|---|
-| `CheckSession` | GET | — | `{ LoggedIn, UserID, UserRecord }` or `{ LoggedIn:false }` |
+| `CheckSession` | GET | - | `{ LoggedIn, UserID, UserRecord }` or `{ LoggedIn:false }` |
 | `Authenticate` | POST | `{ UserName, Password }` | `{ LoggedIn, UserID, UserRecord }` |
-| `Deauthenticate` | POST | — | (any) |
+| `Deauthenticate` | POST | - | (any) |
 | `Users` | GET | `?search=` (optional) | `{ Users: [...] }` |
 | `Users` | POST | user spec | created user / `{ Success, Reason }` |
-| `User/:id` | GET | — | `{ User: {...} }` |
+| `User/:id` | GET | - | `{ User: {...} }` |
 | `User/:id` | PUT | partial updates | updated user / `{ Success, Reason }` |
-| `User/:id` | DELETE | — | (any) |
+| `User/:id` | DELETE | - | (any) |
 | `User/:id/SetPassword` | POST | `{ NewPassword }` | (any) |
 | `Me/ChangePassword` | POST | `{ CurrentPassword, NewPassword }` | (any) |
 
@@ -229,4 +229,4 @@ The bundled demo's `MockAuthFetcher.js` implements this surface in-browser (with
 
 ## Example Application
 
-`example_applications/usermanagement_demo/` is a full Pict app that installs the section against an in-browser mock backend, with a tab strip (Sign in / Users / Change password) gated by session + admin role. Build it with `npm run build` (`quack build` + `quack copy`) and open `dist/index.html`; `node smoke.js` runs a headless jsdom walkthrough of every flow. Seed logins: `admin / admin` (admin) and `alice / wonderland` (regular user). Refreshing the page logs you out — the mock keeps sessions in a single in-memory variable.
+`example_applications/usermanagement_demo/` is a full Pict app that installs the section against an in-browser mock backend, with a tab strip (Sign in / Users / Change password) gated by session + admin role. Build it with `npm run build` (`quack build` + `quack copy`) and open `dist/index.html`; `node smoke.js` runs a headless jsdom walkthrough of every flow. Seed logins: `admin / admin` (admin) and `alice / wonderland` (regular user). Refreshing the page logs you out - the mock keeps sessions in a single in-memory variable.
